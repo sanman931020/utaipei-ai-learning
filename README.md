@@ -152,7 +152,7 @@ v0.2.0 起採用「精密介面」設計語言，所有樣式集中在 `src/styl
 ## GitHub 與網站部署
 
 - 私密原始碼：https://github.com/sanman931020/utaipei-ai-learning
-- 網站由 Vercel 託管，正式網址見專案首頁及 Vercel 專案。
+- 公開網站：https://utaipei-ai-learning.vercel.app/ （Vercel 託管；原始碼保持私密）
 - Vercel 建置前執行 lint、typecheck、test、build。GitHub Actions 範例保留於 `docs/GITHUB_ACTIONS_CI.example.yml`；目前 Git 推送憑證未含 workflow 權限，因此不啟用 Actions。
 - 推送 `main` 後，已連接的 Vercel Git 整合會自動部署；儲存庫保持私密，不使用 GitHub Pages。
 - Vite 保留相對 `base: './'` 與 hash 路由。不上傳 `node_modules`、環境設定或憑證；無需 AI API 金鑰。
