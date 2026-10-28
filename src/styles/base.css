@@ -1,0 +1,66 @@
+/*
+ * Design system — "precision interface".
+ * Cool paper whites, the university's navy as the ink colour, one electric signal colour used sparingly,
+ * hairline rules, monospaced micro-labels and cut-corner geometry instead of soft rounded cards.
+ * Light is the default theme; [data-theme=dark] is only set when the visitor chooses it.
+ */
+:root{
+  --bg:#f4f6f9;--paper:#ffffff;--mist:#eceff4;--tint:#e8eefb;
+  --ink:#0d1a3a;--navy:#1d2b78;--text:#28324a;--muted:#59637a;--faint:#8a93a6;
+  --line:#dde2ea;--line-strong:#c3cad7;--rule:#0d1a3a;
+  --signal:#1f55e0;--signal-ink:#1846c4;--cyan:#0596b8;--on-signal:#ffffff;
+  --ok:#11764a;--ok-bg:#e6f4ec;--warn:#8f5300;--warn-bg:#fdf3e1;--ethics:#6b36a8;--ethics-bg:#f3ecfb;--danger:#b0222b;--danger-bg:#fcebec;
+  --shadow-1:0 1px 0 #0d1a3a0a,0 1px 3px #0d1a3a0d;--shadow-2:0 1px 0 #0d1a3a0a,0 10px 30px -12px #0d1a3a33;--shadow-3:0 30px 80px -30px #0d1a3a59;
+  --cut:10px;--radius:4px;
+  --font-sans:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;
+  --header-h:72px;--ease:cubic-bezier(.2,.7,.2,1);
+  --wrap:1200px;--gutter:clamp(1rem,4vw,2.5rem);
+  color-scheme:light;
+}
+html[data-theme=dark]{
+  --bg:#0a1020;--paper:#0f1729;--mist:#141e34;--tint:#16224a;
+  --ink:#eef2fb;--navy:#a9b8ff;--text:#cbd3e4;--muted:#97a2ba;--faint:#6b7690;
+  --line:#1f2a43;--line-strong:#2f3c5c;--rule:#cbd3e4;
+  --signal:#6d93ff;--signal-ink:#9ab4ff;--cyan:#44c6e6;--on-signal:#0a1020;
+  --ok:#5ccf98;--ok-bg:#10291c;--warn:#f0b354;--warn-bg:#2d220d;--ethics:#c3a0ff;--ethics-bg:#24193a;--danger:#ff8d95;--danger-bg:#371417;
+  --shadow-1:0 1px 0 #0006;--shadow-2:0 12px 30px -12px #000a;--shadow-3:0 30px 80px -30px #000c;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--header-h) + 20px);-webkit-text-size-adjust:100%}
+body{margin:0;min-width:320px;background:var(--bg);color:var(--text);font:400 16px/1.78 var(--font-sans);font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s}
+html.has-dialog body{overflow:hidden}
+h1,h2,h3,h4{color:var(--ink);line-height:1.3;margin:0 0 .5em;letter-spacing:.01em;font-weight:800}
+p{margin:0 0 .8em}
+a{color:var(--signal-ink);text-underline-offset:3px}
+img{max-width:100%;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+pre{font-family:var(--font-sans)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+[tabindex="-1"]:focus{outline:none}
+::selection{background:color-mix(in srgb,var(--signal) 22%,transparent)}
+.sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip-link{position:fixed;left:12px;top:-60px;z-index:100;padding:.6rem 1rem;background:var(--ink);color:var(--bg);font-weight:700;text-decoration:none;transition:top .2s}
+.skip-link:focus{top:12px}
+.muted{color:var(--muted)}
+.small{font-size:.86rem}
+
+/* Micro label: monospaced, uppercase, with an index. Used for section kickers and metadata. */
+.kicker{display:inline-flex;align-items:center;gap:.6rem;font:500 .72rem/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kicker b{font-weight:600;color:var(--signal-ink)}
+.kicker::before{content:"";width:18px;height:1px;background:currentColor;opacity:.6}
+.mono{font-family:var(--font-mono)}
+
+/* ---- Reveal and page transition ---- */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+.page-enter{animation:page-in .38s var(--ease) both}
+@keyframes page-in{from{opacity:0;transform:translateY(8px)}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
