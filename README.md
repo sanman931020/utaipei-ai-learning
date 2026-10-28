@@ -82,9 +82,7 @@ Prompt 分類（共 316 則）：
 
 ## 四、維護與新增內容
 
-所有新增都只要改資料檔，不需修改頁面程式。改完執行 
-pm test` 與 
-pm run build` 確認。撰寫規範見 `docs/CONTENT_GUIDE.md`。
+所有新增都只要改資料檔，不需修改頁面程式。改完執行 `npm test` 與 `npm run build` 確認。撰寫規範見 `docs/CONTENT_GUIDE.md`。
 
 ### 上架影片
 
@@ -110,8 +108,7 @@ status: 'published',
 
 ### 新增或修改教材
 
-在 `src/content/lessons/` 對應檔案的陣列加一筆 `Lesson`。每段內容都要標 `origin`：`'script'`（影片腳本既有內容）或 `'extension'`（網站延伸教材），頁面會自動顯示標籤。可用的內容區塊有 `p`、`list`、`steps`、`flow`（流程圖）、`cards`、`table`、`compare`（模糊 vs 清楚對照）、
-ote`、`pending`（待確認資訊）。
+在 `src/content/lessons/` 對應檔案的陣列加一筆 `Lesson`。每段內容都要標 `origin`：`'script'`（影片腳本既有內容）或 `'extension'`（網站延伸教材），頁面會自動顯示標籤。可用的內容區塊有 `p`、`list`、`steps`、`flow`（流程圖）、`cards`、`table`、`compare`（模糊 vs 清楚對照）、`note`、`pending`（待確認資訊）。
 
 ### 新增 Prompt
 
@@ -132,8 +129,7 @@ v0.2.0 起採用「精密介面」設計語言，所有樣式集中在 `src/styl
 
 ## 六、測試
 
-
-pm test` 會檢查：Prompt ≥ 316 則（教學設計 ≥ 36 則）、18 個分類與各分類最低數量、子分類數不超過 10、ID 不重複、內容不重複、關聯 ID 存在、研究、文獻與研究方法類 Prompt 皆含不得編造的提醒、八支影片編號、影片與教材雙向關聯、沒有影片網址就不能顯示為可播放、各專區單元數量、R12 標示「待計中確認」、Gem 未被描述為重新訓練模型、常見非臺灣用語，以及搜尋關鍵字（簡報、照片、論文、PPT、AI Agent、Literature Review、英文、教案等）、跨分類搜尋（照片、研究、簡報）與子分類篩選。
+`npm test` 會檢查：Prompt ≥ 316 則（教學設計 ≥ 36 則）、18 個分類與各分類最低數量、子分類數不超過 10、ID 不重複、內容不重複、關聯 ID 存在、研究、文獻與研究方法類 Prompt 皆含不得編造的提醒、八支影片編號、影片與教材雙向關聯、沒有影片網址就不能顯示為可播放、各專區單元數量、R12 標示「待計中確認」、Gem 未被描述為重新訓練模型、常見非臺灣用語，以及搜尋關鍵字（簡報、照片、論文、PPT、AI Agent、Literature Review、英文、教案等）、跨分類搜尋（照片、研究、簡報）與子分類篩選。
 
 ## 七、待補資料
 
@@ -159,8 +155,7 @@ pm test` 會檢查：Prompt ≥ 316 則（教學設計 ≥ 36 則）、18 個分
 - GitHub Pages 網站：https://sanman931020.github.io/utaipei-ai-learning/
 - Vercel 網站：https://utaipei-ai-learning.vercel.app/
 - Vercel 建置前執行 lint、typecheck、test、build。GitHub Actions 範例保留於 `docs/GITHUB_ACTIONS_CI.example.yml`；目前 Git 推送憑證未含 workflow 權限，因此不啟用 Actions。
-- 推送 `main` 後，已連接的 Vercel Git 整合會自動部署；儲存庫公開，GitHub Pages 使用 gh-pages 分支根目錄，Vercel 仍提供 main 分支自動部署。
-- Vite 保留相對 `base: './'` 與 hash 路由。不上傳 
-ode_modules`、環境設定或憑證；無需 AI API 金鑰。
+- 推送 `main` 後，已連接的 Vercel Git 整合會自動部署；儲存庫公開，GitHub Pages 使用 `gh-pages` 分支根目錄，Vercel 仍提供 `main` 分支自動部署。
+- Vite 保留相對 `base: './'` 與 hash 路由。不上傳 `node_modules`、環境設定或憑證；無需 AI API 金鑰。
 
-GitHub Pages 更新時須重新執行 npm run build，將 dist 的完整內容與 .nojekyll 發布至 gh-pages 分支。
+GitHub Pages 更新時須重新執行 `npm run build`，將 `dist/` 的完整內容與 `.nojekyll` 發布至 `gh-pages` 分支。
