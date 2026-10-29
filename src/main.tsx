@@ -7,6 +7,12 @@ import './styles/home.css'
 import './styles/learn.css'
 import './styles/videos.css'
 import './styles/prompts.css'
+// Last: interaction and atmosphere layer that refines the components above.
+import './styles/tech.css'
+// Theme materials for light and dark; refines everything above.
+import './styles/theme.css'
+// Typography system and light-mode titanium materials.
+import './styles/refine.css'
 import { App } from './ui/App'
 
 createRoot(document.getElementById('root')!).render(<StrictMode><App /></StrictMode>)

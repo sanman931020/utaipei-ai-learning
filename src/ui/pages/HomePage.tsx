@@ -30,9 +30,8 @@ export function HomePage({ route }: { route: Route }) {
 
   return <div ref={ref} className="home">
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-grid" aria-hidden="true" />
       <div className="hero-copy">
-        <span className="kicker"><b>UTAIPEI</b> Computing Center · Self-directed AI Learning</span>
+        <span className="kicker"><b>UTAIPEI</b> Computing Center</span>
         <h1 id="hero-title">生成式 AI 與 <span className="nowrap">AI Agent</span><span>自主學習平台</span></h1>
         <p className="hero-lead">從 AI 工具操作到自主學習與學術研究，建立有效、負責任的人工智慧應用能力。</p>
         <div className="hero-actions">
@@ -45,7 +44,6 @@ export function HomePage({ route }: { route: Route }) {
         <div><dt>知識單元</dt><dd>{lessons.length}</dd></div>
         <div><dt>規劃影片</dt><dd>{String(videos.length).padStart(2, '0')}</dd></div>
         <div><dt>Prompt</dt><dd>{prompts.length}</dd></div>
-        <div><dt>需要登入</dt><dd>00</dd></div>
       </dl>
     </section>
 
@@ -57,7 +55,7 @@ export function HomePage({ route }: { route: Route }) {
       </div>
     </section>}
 
-    <section className="wrap home-block reveal" aria-labelledby="directions-title">
+    <section className="wrap home-block is-band reveal" aria-labelledby="directions-title">
       <header className="section-head is-row">
         <div><span className="kicker"><b>01</b> Learning paths</span><h2 id="directions-title">三大學習方向</h2></div>
         <p>依需求選擇起點。每個方向都有完整教材、可複製的 Prompt 與自主練習任務。</p>
@@ -85,7 +83,7 @@ export function HomePage({ route }: { route: Route }) {
       </div>
     </section>
 
-    <section className="wrap home-block reveal" aria-labelledby="prompts-title">
+    <section className="wrap home-block is-band reveal" aria-labelledby="prompts-title">
       <header className="section-head is-row">
         <div><span className="kicker"><b>03</b> Prompt library</span><h2 id="prompts-title">熱門 Prompt</h2></div>
         <p>複製到 ChatGPT 或 Gemini，把 [方括號] 換成你的內容；也可以先在網站上填好再複製。</p>

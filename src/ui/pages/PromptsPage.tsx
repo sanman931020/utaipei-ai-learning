@@ -12,6 +12,21 @@ import { PromptCard, PromptDialog } from '../components/PromptCard'
 import { useIndicator } from '../useIndicator'
 
 const suggestions = ['簡報', '照片', '論文', '文獻', '研究方法', '資料分析', '讀書計畫', '英文', '教案', 'AI Agent', 'PPT', 'Python']
+/** Task-first entry points: one click applies the search and filters that answer the task. */
+const scenarios: { label: string; query: Record<string, string> }[] = [
+  { label: '準備期末簡報', query: { cat: 'slides' } },
+  { label: '寫文獻回顧', query: { cat: 'literature' } },
+  { label: '準備試教或教案', query: { cat: 'teaching' } },
+  { label: '分析問卷資料', query: { cat: 'data' } },
+  { label: '規劃研究設計', query: { cat: 'methods' } },
+  { label: '拍攝與剪輯影片', query: { cat: 'video' } },
+  { label: '生成圖片或海報', query: { cat: 'image' } },
+  { label: '用 AI Agent 做專題', query: { cat: 'agent' } },
+  { label: '英文寫作與翻譯', query: { cat: 'english' } },
+  { label: '準備考試', query: { q: '考試' } },
+  { label: '履歷與面試', query: { cat: 'career' } },
+  { label: '查核 AI 回答', query: { cat: 'ethics' } },
+]
 const tools: (SupportedTool | 'all')[] = ['all', 'ChatGPT', 'Gemini', '通用']
 const levels: (Difficulty | 'all')[] = ['all', '入門', '進階', '研究應用']
 const PAGE = 18
@@ -103,7 +118,10 @@ export function PromptsPage({ route }: { route: Route }) {
           {text && <button type="button" className="search-clear" onClick={() => { setText(''); update({ query: '' }) }} aria-label="清除搜尋文字">✕</button>}
           <span className="search-count mono" aria-hidden="true">{results.length}</span>
         </form>
-        <div className="search-suggest" aria-label="常用關鍵字"><span className="mono">TRY</span>{suggestions.map(word => <button key={word} type="button" onClick={() => { setText(word); update({ query: word }) }} aria-pressed={filters.query === word}>{word}</button>)}</div>
+        <div className="scenario-row" role="group" aria-label="依任務情境快速篩選"><span className="mono">我想要</span>{scenarios.map(item => {
+          const on = Object.entries(item.query).every(([key, value]) => route.query.get(key) === value) && (!item.query.q ? !filters.query : true)
+          return <button key={item.label} type="button" aria-pressed={on} onClick={() => { setText(item.query.q ?? ''); navigate('prompts', on ? {} : item.query) }}>{item.label}</button>
+        })}</div>
         <details className="advanced" open={advancedActive || undefined}>
           <summary><span>進階篩選</span>{advancedActive && <span className="mono advanced-on">ON</span>}</summary>
           <div className="advanced-grid">

@@ -1,0 +1,198 @@
+/*
+ * Theme layer (loaded last). Two material systems on one interaction language:
+ *   Light — frosted white paper on a cool silver-grey ground, university navy ink, one signal blue.
+ *   Dark  — graphite and titanium: three surface levels, silver hairlines, cold cyan for interaction,
+ *           silver used sparingly (primary buttons, selected indicators, featured panels, page titles).
+ */
+
+/* ================= Tokens ================= */
+:root{
+  --bg:#f2f4f7;--paper:#ffffff;--mist:#eef1f5;--tint:#e8eef9;--band:#e9edf2;--float:#ffffff;
+  --ink:#0c1530;--navy:#1d2b78;--text:#26304a;--muted:#566075;--faint:#8a92a4;
+  --line:#dce1e9;--line-strong:#c3cad6;--rule:#0c1530;
+  --signal:#1f55e0;--signal-ink:#1846c4;--cyan:#0a9cc2;
+  --metal:linear-gradient(100deg,#c8ced8 0%,#f7f9fb 38%,#aab3c0 62%,#e6e9ee 100%);
+  --metal-line:linear-gradient(90deg,transparent,#aeb6c3 20%,#e9edf2 50%,#aeb6c3 80%,transparent);
+  --grid-line:#0c15300a;
+  --accent:var(--signal);
+}
+html[data-theme=dark]{
+  --bg:#0b0d11;--paper:#12161c;--mist:#171c24;--tint:#1b2230;--band:#0f1217;--float:#161b23;
+  --ink:#eef1f5;--navy:#d7dde6;--text:#c4cbd6;--muted:#939cab;--faint:#677080;
+  --line:#222832;--line-strong:#343c49;--rule:#5f6878;
+  --signal:#6fd6fb;--signal-ink:#9fe5ff;--cyan:#7fdcff;--on-signal:#0b0d11;
+  --ok:#62d39c;--ok-bg:#10261b;--warn:#f0b65a;--warn-bg:#2a210f;--ethics:#c4a5ff;--ethics-bg:#211a33;--danger:#ff8f97;--danger-bg:#331417;
+  --metal:linear-gradient(100deg,#5d6573 0%,#e9edf2 34%,#8d96a4 58%,#cfd5de 78%,#6a7280 100%);
+  --metal-line:linear-gradient(90deg,transparent,#5e6776 18%,#d9dfe7 50%,#5e6776 82%,transparent);
+  --titanium:linear-gradient(180deg,#eef1f5 0%,#c3cad4 48%,#a9b1bd 52%,#d6dbe2 100%);
+  --grid-line:#ffffff07;
+  --shadow-1:0 1px 0 #000a;--shadow-2:0 14px 34px -14px #000d;--shadow-3:0 30px 80px -30px #000;
+  --accent:var(--cyan);
+}
+
+/* ================= Grounds ================= */
+body{background:var(--bg)}
+html[data-theme=dark] body{background:
+  radial-gradient(1100px 520px at 85% -8%,#1c2433aa,transparent 70%),
+  radial-gradient(800px 460px at -5% 10%,#141c2a88,transparent 70%),
+  repeating-linear-gradient(90deg,#ffffff03 0 1px,transparent 1px 4px),
+  var(--bg) fixed}
+
+/* Full-bleed bands separate the home page sections by tone instead of boxes. */
+.home-block.is-band{position:relative;isolation:isolate;padding-bottom:clamp(3.5rem,8vw,6rem);margin-top:clamp(3.5rem,8vw,6rem);padding-top:clamp(3rem,7vw,5rem)}
+.home-block.is-band::before{content:"";position:absolute;inset:0 -100vmax;z-index:-1;background:var(--band);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+html[data-theme=dark] .home-block.is-band::before{border:0;background:linear-gradient(var(--band),var(--band)) padding-box;box-shadow:0 -1px 0 #ffffff0a,0 1px 0 #ffffff0a}
+.home-block.is-band+.home-block{padding-top:clamp(1rem,3vw,2rem)}
+.hero{padding-bottom:clamp(1rem,3vw,2rem)}
+
+/* ================= Silver details (dark) ================= */
+/* Page and hero titles: brushed-silver lettering. */
+html[data-theme=dark] .page-head h1,html[data-theme=dark] .hero h1{background:linear-gradient(180deg,#ffffff 0%,#dfe4eb 55%,#9aa3b1 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html[data-theme=dark] .hero h1 span:not(.nowrap),html[data-theme=dark] .page-head h1 em{background:linear-gradient(180deg,#e2f7ff,#6fd6fb);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* Section rules become a silver hairline that fades at both ends. */
+html[data-theme=dark] .page-head::after,html[data-theme=dark] .direction-list,html[data-theme=dark] .featured-list,html[data-theme=dark] .lesson-index,html[data-theme=dark] .series-panel,html[data-theme=dark] .result-bar{border-image:var(--metal-line) 1}
+html[data-theme=dark] .page-head::after{background:var(--metal-line)}
+/* Featured surfaces carry a titanium edge; ordinary cards do not. */
+html[data-theme=dark] .category-index,html[data-theme=dark] .responsibility,html[data-theme=dark] .prompt-dialog,html[data-theme=dark] .palette,html[data-theme=dark] .hero-circuit{border:1px solid;border-image:var(--metal) 1}
+html[data-theme=dark] .responsibility{border-top-width:2px}
+html[data-theme=dark] .lesson-paper{background-color:var(--paper);border-color:var(--line-strong);box-shadow:inset 0 1px 0 #ffffff0d,0 30px 60px -40px #000}
+html[data-theme=dark] .objectives{background:linear-gradient(180deg,#1a202a,#151a22)}
+html[data-theme=dark] .example-prompt,html[data-theme=dark] .flow,html[data-theme=dark] .mini-cards article{background:var(--mist)}
+html[data-theme=dark] .example-prompt pre{color:#d6dce6}
+
+/* Header and footer */
+.site-header.is-scrolled{box-shadow:0 1px 0 var(--line),0 8px 24px -18px #0c153033}
+html[data-theme=dark] .site-header{background:color-mix(in srgb,var(--bg) 78%,transparent)}
+html[data-theme=dark] .site-header.is-scrolled{box-shadow:none;border-image:var(--metal-line) 1;border-bottom:1px solid}
+html[data-theme=dark] .nav-ink{background:var(--metal);box-shadow:0 0 10px #cfd6e055}
+html[data-theme=dark] .site-nav a[aria-current=page] small{color:var(--cyan)}
+.site-footer{position:relative}
+.site-footer::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--metal-line);opacity:.6}
+html[data-theme=dark] .site-footer{background:#07080b}
+html[data-theme=dark] .footer-statement{color:#eef1f5}
+
+/* ================= Switches and tabs ================= */
+html[data-theme=dark] .switch{background:var(--float);border-color:var(--line-strong)}
+html[data-theme=dark] .switch-plate{background:var(--titanium);box-shadow:inset 0 1px 0 #fff,0 6px 18px -6px #000}
+html[data-theme=dark] .switch-option[aria-current=true],html[data-theme=dark] .switch-option[aria-selected=true]{color:#0b0d11}
+html[data-theme=dark] .switch-option[aria-current=true] .tool-glyph{border-color:#0b0d11}
+html[data-theme=dark] .line-tabs-ink{background:linear-gradient(90deg,#9aa3b1,#f3f5f8,#9aa3b1);box-shadow:0 0 8px #e6ebf255}
+html[data-theme=dark] .line-tabs-ink::after{background:var(--cyan)}
+html[data-theme=dark] .category-strip button::after{background:var(--metal)}
+.line-tab,.category-strip button,.site-nav a,.track-entries a{transition:color .25s,opacity .25s}
+.line-tabs:hover .line-tab:not(:hover):not([aria-current=true]):not([aria-pressed=true]){opacity:.6}
+
+/* ================= Buttons: one language, two materials =================
+ * default → hover (deeper fill, one light lap around the edge, a sheen across) → pressed → focus → disabled → loading → success.
+ */
+@property --ring-o{syntax:'<percentage>';inherits:false;initial-value:0%}
+.btn:hover,.btn:focus-visible{animation:btn-ring 1.15s cubic-bezier(.4,0,.2,1) 1 forwards,btn-ring-fade 1.6s ease forwards;
+  background:conic-gradient(from var(--ring),transparent 0deg 230deg,color-mix(in srgb,#45d4ff var(--ring-o),transparent) 300deg,color-mix(in srgb,var(--signal) var(--ring-o),transparent) 340deg,transparent 360deg),color-mix(in srgb,var(--signal) 55%,var(--line-strong))}
+@keyframes btn-ring-fade{0%,70%{--ring-o:100%}100%{--ring-o:0%}}
+.btn:active{transform:translateY(1px) scale(.985);transition-duration:.06s}
+.btn:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.btn.is-loading{pointer-events:none;color:transparent}
+.btn.is-loading::after{content:"";position:absolute;inset:auto;left:calc(50% - 8px);top:calc(50% - 8px);width:16px;height:16px;border:2px solid var(--btn-fg);border-right-color:transparent;border-radius:50%;background:none;transform:none;animation:spin .7s linear infinite;z-index:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Dark: the primary button is titanium with graphite lettering; hover deepens the metal and sends one sheen across. */
+html[data-theme=dark] .btn{--btn-bg:var(--float);--btn-line:var(--line-strong);--btn-fg:var(--ink)}
+html[data-theme=dark] .btn:not(.btn-primary){--btn-hover-bg:#1d232d}
+html[data-theme=dark] .btn-primary{--btn-fg:#0b0d11;--btn-line:#e6eaf0;--btn-hover-bg:#aab2be}
+html[data-theme=dark] .btn-primary::before{background:var(--titanium)}
+html[data-theme=dark] .btn-primary:hover::before,html[data-theme=dark] .btn-primary:focus-visible::before{background:radial-gradient(110px circle at var(--mx,50%) var(--my,50%),#ffffff55,transparent 70%),linear-gradient(180deg,#d9dee6,#9ea7b4 50%,#8e97a5 52%,#bcc3cd)}
+html[data-theme=dark] .btn-primary:hover,html[data-theme=dark] .btn-primary:focus-visible{--btn-fg:#07090c;filter:drop-shadow(0 0 12px #cfd8e433)}
+html[data-theme=dark] .btn::after{background:linear-gradient(100deg,transparent 30%,#ffffff40 50%,transparent 70%)}
+html[data-theme=dark] .btn:hover,html[data-theme=dark] .btn:focus-visible{background:conic-gradient(from var(--ring),transparent 0deg 230deg,color-mix(in srgb,#ffffff var(--ring-o),transparent) 300deg,color-mix(in srgb,var(--cyan) var(--ring-o),transparent) 340deg,transparent 360deg),#5c6574}
+html[data-theme=dark] .copy-button.is-copied{--btn-fg:#07140d}
+html[data-theme=dark] .copy-button.is-copied::before{background:var(--ok)}
+@media (prefers-reduced-motion: reduce){.btn:hover,.btn:focus-visible{animation:none;background:var(--signal)}}
+
+/* Theme toggle: two icons on a track, a titanium knob slides between them. */
+.theme-toggle{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;align-items:center;width:66px;height:34px;padding:0;border:1px solid var(--line-strong);background:var(--mist);overflow:hidden;transition:border-color .2s}
+.theme-toggle:hover{border-color:var(--signal)}
+.theme-knob{position:absolute;top:3px;left:3px;width:28px;height:26px;background:var(--navy);box-shadow:0 2px 6px #0c153040;transition:transform .45s cubic-bezier(.5,1.6,.4,1),background-color .3s}
+.theme-toggle[aria-checked=true] .theme-knob{transform:translateX(31px);background:var(--titanium)}
+.theme-icon{position:relative;z-index:1;justify-self:center;width:15px;height:15px;fill:none;stroke-width:1.8;stroke-linecap:round;transition:stroke .3s,transform .45s var(--ease)}
+.theme-icon.is-sun{stroke:#fff}
+.theme-icon.is-sun circle{fill:#fff}
+.theme-icon.is-moon{stroke:var(--faint)}
+.theme-toggle[aria-checked=true] .theme-icon.is-sun{stroke:var(--faint);transform:rotate(-90deg)}
+.theme-toggle[aria-checked=true] .theme-icon.is-sun circle{fill:none}
+.theme-toggle[aria-checked=true] .theme-icon.is-moon{stroke:#0b0d11;fill:#0b0d11}
+.theme-toggle:hover .theme-icon.is-moon{transform:rotate(-12deg)}
+
+/* Theme change: a circle grows from the switch (view transitions), or colours cross-fade. */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-new(root){animation:theme-reveal .6s cubic-bezier(.4,0,.2,1)}
+@keyframes theme-reveal{from{clip-path:circle(0 at var(--vt-x,90%) var(--vt-y,36px))}to{clip-path:circle(150vmax at var(--vt-x,90%) var(--vt-y,36px))}}
+html.theme-switching *,html.theme-switching *::before,html.theme-switching *::after{transition:background-color .4s ease,color .4s ease,border-color .4s ease,fill .4s ease,stroke .4s ease!important}
+
+/* ================= Track identity =================
+ * Each track has its own accent: tools (blue / indigo), the shared course (violet), AI Agent tracks (amber and teal,
+ * drawn with a hatched marker so the two agent tracks read as one family).
+ */
+[data-track=chatgpt-web],[data-track=chatgpt-desktop]{--track:#0f8a6a}
+[data-track=gemini-web],[data-track=gemini-desktop]{--track:#3b6fe0}
+[data-track=literacy]{--track:#7a4fd1}
+[data-track=agent-learning]{--track:#c0650e}
+[data-track=agent-research]{--track:#0b8aa8}
+html[data-theme=dark] [data-track=chatgpt-web],html[data-theme=dark] [data-track=chatgpt-desktop]{--track:#55d6ad}
+html[data-theme=dark] [data-track=gemini-web],html[data-theme=dark] [data-track=gemini-desktop]{--track:#7fdcff}
+html[data-theme=dark] [data-track=literacy]{--track:#c3a5ff}
+html[data-theme=dark] [data-track=agent-learning]{--track:#ffb066}
+html[data-theme=dark] [data-track=agent-research]{--track:#62e3bf}
+.learn-page .lesson-code.is-large{background:var(--track,var(--navy))}
+html[data-theme=dark] .learn-page .lesson-code.is-large{color:#0b0d11}
+.learn-page .lesson-index-code,.learn-page .lesson-crumbs a,.learn-page .lesson-group-head small,.learn-page .track-intro .kicker b{color:var(--track,var(--signal-ink))}
+.learn-page .objectives{border-left-color:var(--track,var(--navy))}
+.learn-page .sidebar-lessons a[aria-current=page]{box-shadow:inset 2px 0 0 var(--track,var(--signal))}
+.learn-page .lesson-progress b{background:var(--track,var(--signal))}
+.learn-page .practice{border-top-color:var(--track,var(--navy))}
+.learn-page .lesson-group-head{border-image:linear-gradient(90deg,var(--track,var(--rule)) 0 64px,var(--rule) 64px) 1}
+html[data-theme=dark] .learn-page .lesson-group-head{border-image:linear-gradient(90deg,var(--track) 0 64px,var(--line-strong) 64px) 1}
+.track-entries a[data-track]{padding-left:1.6rem}
+.track-entries a[data-track]::before{content:"";position:absolute;left:.75rem;top:.6rem;width:6px;height:6px;background:var(--track)}
+.track-entries a[data-track^=agent]::before{width:7px;height:7px;background:repeating-linear-gradient(135deg,var(--track) 0 2px,transparent 2px 3.5px);outline:1px solid var(--track)}
+.track-entries a[aria-current=true]::after{background:var(--track)}
+.learn-page[data-track^=agent] .lesson-paper{background-image:linear-gradient(var(--track),var(--track)),linear-gradient(var(--track),var(--track)),linear-gradient(var(--track),var(--track)),linear-gradient(var(--track),var(--track))}
+.learn-page[data-track^=agent] .page-head::before{background:linear-gradient(90deg,transparent,var(--track),transparent)}
+@media (max-width:640px){.track-entries a[data-track]{padding-left:1.2rem}.track-entries a[data-track]::before{left:0;top:1rem}.track-entries a[aria-current=true]{padding-left:1.6rem}}
+
+/* ================= Search, cards and prompt detail ================= */
+.search-field input{background:var(--paper)}
+.search-field:focus-within{box-shadow:0 0 0 4px color-mix(in srgb,var(--signal) 12%,transparent)}
+html[data-theme=dark] .search-field input{background:var(--float);border-color:var(--line-strong)}
+html[data-theme=dark] .search-field::after{border-color:var(--cyan)}
+html[data-theme=dark] .library-search{background-color:var(--paper)}
+html[data-theme=dark] .scenario-row button{background:var(--float);border-color:var(--line-strong);color:var(--ink)}
+html[data-theme=dark] .scenario-row button[aria-pressed=true]{background:var(--titanium);border-color:#e6eaf0;color:#0b0d11}
+html[data-theme=dark] .cat-code{background:#d7dde6;color:#0b0d11}
+html[data-theme=dark] .prompt-card{background:var(--paper)}
+html[data-theme=dark] .prompt-grid.is-featured .prompt-card{background:linear-gradient(180deg,#161b23,#12161c)}
+html[data-theme=dark] .prompt-card::before,html[data-theme=dark] .prompt-card::after{border-color:#dfe5ee}
+html[data-theme=dark] .prompt-preview{background:var(--mist);border-left-color:#5c6574}
+html[data-theme=dark] .prompt-dialog{background:var(--bg)}
+html[data-theme=dark] .prompt-full,html[data-theme=dark] .fill-panel{background:var(--paper);border-color:var(--line-strong)}
+html[data-theme=dark] .fill-grid textarea{background:var(--mist);border-color:var(--line-strong)}
+html[data-theme=dark] .fill-meter b{background:linear-gradient(90deg,#9aa3b1,var(--cyan))}
+html[data-theme=dark] .tag.is-tool{color:#d7dde6;border-color:#4a5363}
+.empty-state{position:relative;overflow:hidden}
+.empty-state::before{content:"";position:absolute;inset:auto 0 0;height:2px;background:var(--metal-line);opacity:.7}
+
+/* ================= Video and home panels ================= */
+html[data-theme=dark] .hero-circuit{--circuit-bg:#0b0e13;--circuit-line:#2a313c;--circuit-dim:#8f99a8;--circuit-hot:#7fdcff;--circuit-blue:#5ab8e0;background:radial-gradient(120% 90% at 50% 40%,#1b212b 0%,#0b0e13 64%)}
+html[data-theme=dark] .circuit-wafer{fill:#11151c}
+html[data-theme=dark] .circuit-station{fill:#151a22;stroke:#3a4250}
+html[data-theme=dark] .circuit-package{fill:#0e1218;stroke:#c9d0da}
+html[data-theme=dark] .circuit-pin{stroke:#aab2be}
+html[data-theme=dark] .circuit-core{fill:#1b2130;stroke:#3b4558}
+html[data-theme=dark] .video-cover-art.is-chatgpt{background:#0f1d1a}
+html[data-theme=dark] .video-cover-art.is-gemini{background:#121a2c}
+html[data-theme=dark] .video-cover-art.is-common{background:#1b1628}
+html[data-theme=dark] .video-pending{background-color:#0e1218}
+html[data-theme=dark] .side-panel.is-accent .side-lesson{background:var(--float)}
+html[data-theme=dark] .back-to-top{background:var(--float);box-shadow:0 0 0 1px var(--line-strong),var(--shadow-2)}
+html[data-theme=dark] .btt-ring{stroke:#dfe5ee}
+html[data-theme=dark] .toast{background:var(--titanium);color:#0b0d11}
+html[data-theme=dark] .toast-check{border-color:#0d6b42}
+html[data-theme=dark] .status-chip.is-planned{background:var(--mist)}

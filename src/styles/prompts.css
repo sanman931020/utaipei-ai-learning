@@ -147,3 +147,14 @@ html[data-theme=dark] .favorite-button.is-on{background:#33270a}
 
 @media(min-width:821px){.is-lesson-plan .fill-panel{max-height:55vh;overflow:auto;scrollbar-width:thin}.is-lesson-plan .prompt-full pre{max-height:55vh}}
 .plan-entry>div{min-width:0}.plan-entry .kicker{display:flex;line-height:1.5;margin-bottom:.4rem}
+
+/* Task scenarios: the first thing a student with a job to do can click. */
+.scenario-row{display:flex;align-items:center;gap:.45rem;overflow-x:auto;scrollbar-width:none;padding:.1rem 0 .2rem}
+.scenario-row>.mono{flex:none;font-size:.64rem;letter-spacing:.12em;color:var(--signal-ink);margin-right:.2rem}
+.scenario-row button{position:relative;flex:none;padding:.42rem .8rem;border:1px solid var(--line-strong);background:var(--paper);font-size:.84rem;font-weight:700;color:var(--ink);transition:border-color .2s,background-color .2s,color .2s;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,0 100%)}
+.scenario-row button:hover{border-color:var(--signal);color:var(--signal-ink)}
+.scenario-row button[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+html[data-theme=dark] .scenario-row button[aria-pressed=true]{background:var(--signal);border-color:var(--signal);color:#06102a}
+/* Horizontal strips hide the scrollbar and fade at the right edge to show there is more to scroll. */
+.category-strip,.scenario-row{scrollbar-width:none;mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent);padding-right:48px}
+.category-strip::-webkit-scrollbar,.scenario-row::-webkit-scrollbar{display:none}

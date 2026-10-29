@@ -13,7 +13,9 @@ export function useIndicator<T extends HTMLElement>(activeSelector: string, indi
       const active = root.querySelector<HTMLElement>(activeSelector)
       const indicator = root.querySelector<HTMLElement>(indicatorSelector)
       if (!indicator) return
-      if (!active) { indicator.style.setProperty('--w', '0px'); return }
+      // Nothing selected (e.g. a shared track while the version tabs are shown): hide the indicator entirely.
+      if (!active) { indicator.style.setProperty('--w', '0px'); indicator.style.opacity = '0'; return }
+      indicator.style.opacity = '1'
       indicator.style.setProperty('--x', `${active.offsetLeft}px`)
       indicator.style.setProperty('--w', `${active.offsetWidth}px`)
       root.classList.add('is-measured')

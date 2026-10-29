@@ -1,0 +1,184 @@
+/*
+ * Refinement layer (loaded last): typography system, light-mode titanium materials,
+ * and a few cross-theme component details.
+ *
+ * Type roles
+ *   Display  — Space Grotesk (Latin, numerals) falling back to Noto Sans TC for Chinese: headings, numbers, buttons, nav.
+ *   Reading  — Inter (Latin) + Noto Sans TC: body text and long lessons.
+ *   Technical— IBM Plex Mono: micro labels, codes, readouts only.
+ */
+:root{
+  --font-display:'Space Grotesk','Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  --font-sans:'Inter','Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  --fs-hero:clamp(2.6rem,5.6vw,4.5rem);
+  --fs-h1:clamp(2.3rem,5vw,3.8rem);
+  --fs-h2:clamp(1.55rem,3vw,2.2rem);
+  --fs-h3:1.2rem;
+  --fs-body:1rem;
+  --fs-read:1.04rem;
+  --lh-read:1.95;
+}
+
+/* ================= Typography ================= */
+body{font-family:var(--font-sans);font-feature-settings:"cv11","ss03";letter-spacing:.005em}
+h1,h2,h3,h4,.hero h1,.page-head h1,.section-head h2,.series-head h2,.series-head h3,.track-intro h2,.lesson-cover h1,.lesson-group-head h2,.dialog-title h2,
+.direction-main b,.lesson-index-main b,.video-row h3,.prompt-card h3,.featured-main b,.about-intro h2,.responsibility h2,.footer-name,.header-title b{font-family:var(--font-display);letter-spacing:-.01em}
+.hero h1{font-size:var(--fs-hero);font-weight:700;line-height:1.06;letter-spacing:-.025em}
+.page-head h1{font-size:var(--fs-h1);font-weight:700;letter-spacing:-.02em}
+.section-head h2,.series-head h2,.track-intro h2{font-size:var(--fs-h2);font-weight:700;letter-spacing:-.015em}
+.lesson-cover h1{font-weight:700;letter-spacing:-.015em}
+.lesson-group-head h2{font-weight:700}
+/* Numerals: geometric, tabular, so counts and unit codes line up. */
+.direction-no,.hero-index dd,.result-count,.about-stats dd,.video-row-order,.lesson-index-code,.lesson-code,.steps li>span,.cover-code,.search-count,.featured-no,.prompt-index{font-family:var(--font-display)!important;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.hero-index dd{font-weight:500;font-size:clamp(2rem,3.6vw,2.8rem)}
+.direction-no{font-weight:500}
+.lesson-index-code{font-weight:600;font-size:1.2rem}
+.lesson-code{font-weight:600}
+/* Interface text */
+.btn{font-family:var(--font-display);font-weight:600;letter-spacing:.02em}
+.site-nav a{font-family:var(--font-display);font-weight:600;letter-spacing:.02em}
+.switch-option,.line-tab,.category-strip button,.track-entries a,.scenario-row button{font-family:var(--font-display)}
+.kicker{font-size:.68rem;letter-spacing:.16em}
+/* Long reading: a little larger, more air, a comfortable measure. */
+.lesson-paper{font-size:var(--fs-read)}
+.lesson-paper p,.lesson-paper li{line-height:var(--lh-read);letter-spacing:.012em}
+.lesson-paper p{max-width:40em}
+.lesson-section-head h3{font-family:var(--font-display);font-size:1.22rem;font-weight:700}
+.lesson-summary{font-size:1.1rem;line-height:1.85}
+@media (max-width:600px){:root{--fs-read:1rem;--lh-read:1.9}.hero h1{letter-spacing:-.02em}}
+
+/* ================= Arrow box (learning paths, lesson index) =================
+ * Hover no longer floods the box: the edge lights up, corner ticks appear and the arrow slides out and back in.
+ */
+.direction-go{position:relative;overflow:hidden;background:transparent!important;border:1px solid var(--line-strong)!important;color:var(--ink)!important;transition:border-color .3s,box-shadow .3s}
+.direction-go::before,.direction-go::after{content:"";position:absolute;width:7px;height:7px;border-color:var(--signal);border-style:solid;opacity:0;transition:opacity .3s,transform .35s var(--ease)}
+.direction-go::before{left:3px;top:3px;border-width:1.5px 0 0 1.5px;transform:translate(3px,3px)}
+.direction-go::after{right:3px;bottom:3px;border-width:0 1.5px 1.5px 0;transform:translate(-3px,-3px)}
+.direction-go .arrow{transition:transform .35s var(--ease),opacity .2s}
+.direction-list a:hover .direction-go,.lesson-index a:hover .direction-go,.direction-list a:focus-visible .direction-go,.lesson-index a:focus-visible .direction-go{border-color:var(--signal)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--signal) 25%,transparent),0 0 0 4px color-mix(in srgb,var(--signal) 8%,transparent);color:var(--signal-ink)!important}
+.direction-list a:hover .direction-go::before,.direction-list a:hover .direction-go::after,.lesson-index a:hover .direction-go::before,.lesson-index a:hover .direction-go::after{opacity:1;transform:none}
+.direction-list a:hover .direction-go .arrow,.lesson-index a:hover .direction-go .arrow{animation:arrow-pass .55s var(--ease)}
+@keyframes arrow-pass{0%{transform:translateX(0)}45%{transform:translateX(22px);opacity:0}46%{transform:translateX(-22px);opacity:0}100%{transform:translateX(0);opacity:1}}
+html[data-theme=dark] .direction-go{background:#ffffff05!important}
+html[data-theme=dark] .direction-list a:hover .direction-go,html[data-theme=dark] .lesson-index a:hover .direction-go{background:#6fd6fb0d!important}
+@media (prefers-reduced-motion: reduce){.direction-list a:hover .direction-go .arrow,.lesson-index a:hover .direction-go .arrow{animation:none}}
+
+/* Dark leftovers from the earlier blue palette, now cyan. */
+html[data-theme=dark] .switch-plate{box-shadow:inset 0 1px 0 #fff,0 6px 18px -6px #000}
+html[data-theme=dark] .prompt-card:hover{background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),#6fd6fb14,var(--paper) 70%)}
+html[data-theme=dark] .direction-list a:hover{background:linear-gradient(90deg,#6fd6fb0d,transparent 70%)}
+
+/* ================= Light mode: titanium daylight ================= */
+html:not([data-theme=dark]){
+  --bg:#eef1f5;--paper:#fbfcfd;--mist:#f1f3f7;--band:#e5e9ef;--float:#ffffff;
+  --ink:#0a1330;--navy:#172566;--text:#25304a;--muted:#55607a;--faint:#8891a3;
+  --line:#d8dde6;--line-strong:#bcc4d0;--rule:#0a1330;
+  --signal:#1d58dc;--signal-ink:#1546c0;--cyan:#0794b8;
+  --metal:linear-gradient(105deg,#b9c1cd 0%,#f6f8fb 30%,#c7ced9 52%,#eef1f5 74%,#aab3c0 100%);
+  --metal-line:linear-gradient(90deg,transparent,#aab3c0 18%,#ffffff 50%,#aab3c0 82%,transparent);
+  --grid-line:#0a13300b;
+}
+html:not([data-theme=dark]) body{background:
+  linear-gradient(180deg,#f7f9fb 0,#eef1f5 520px),
+  #eef1f5}
+
+/* Header: frosted glass with a silver hairline. */
+html:not([data-theme=dark]) .site-header{background:color-mix(in srgb,#f7f9fb 82%,transparent)}
+html:not([data-theme=dark]) .site-header.is-scrolled{border-bottom:1px solid;border-image:var(--metal-line) 1;box-shadow:0 10px 30px -24px #0a133059}
+html:not([data-theme=dark]) .nav-ink{background:linear-gradient(90deg,var(--navy),var(--signal))}
+
+/* Buttons
+ * Primary  — deep navy with a top sheen and an inner highlight line (a double edge), white type.
+ * Secondary— frosted silver face with a brushed-metal border.
+ */
+html:not([data-theme=dark]) .btn{--btn-line:var(--metal);--btn-bg:linear-gradient(180deg,#ffffff,#eef1f5);--btn-fg:var(--ink)}
+html:not([data-theme=dark]) .btn::before{background:linear-gradient(180deg,#ffffff,#edf0f4);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 #d6dbe3}
+html:not([data-theme=dark]) .btn:hover::before,html:not([data-theme=dark]) .btn:focus-visible::before{background:radial-gradient(90px circle at var(--mx,50%) var(--my,50%),#1d58dc1a,transparent 70%),linear-gradient(180deg,#f3f5f8,#e2e7ee)}
+html:not([data-theme=dark]) .btn-primary{--btn-line:linear-gradient(180deg,#3a4a95,#0d1745);--btn-fg:#fff}
+html:not([data-theme=dark]) .btn-primary::before{background:linear-gradient(180deg,#24358a 0%,#172566 55%,#111c52 100%);box-shadow:inset 0 1px 0 #ffffff33,inset 0 0 0 1px #ffffff12}
+html:not([data-theme=dark]) .btn-primary:hover::before,html:not([data-theme=dark]) .btn-primary:focus-visible::before{background:radial-gradient(110px circle at var(--mx,50%) var(--my,50%),#ffffff2a,transparent 70%),linear-gradient(180deg,#18266c,#0c1442)}
+html:not([data-theme=dark]) .btn-primary:hover,html:not([data-theme=dark]) .btn-primary:focus-visible{--btn-fg:#fff;filter:drop-shadow(0 8px 16px #17256633)}
+html:not([data-theme=dark]) .btn:hover,html:not([data-theme=dark]) .btn:focus-visible{--btn-fg:var(--ink)}
+html:not([data-theme=dark]) .btn-primary:hover,html:not([data-theme=dark]) .btn-primary:focus-visible{--btn-fg:#fff}
+html:not([data-theme=dark]) .copy-button.is-copied::before{background:var(--ok);box-shadow:none}
+/* A tiny status tick on primary buttons: lit while hovered. */
+.btn-primary .arrow{margin-left:.15rem}
+
+/* Switch and tabs */
+html:not([data-theme=dark]) .switch{background:linear-gradient(180deg,#fff,#f0f2f6);border:1px solid;border-image:var(--metal) 1}
+html:not([data-theme=dark]) .switch-plate{background:linear-gradient(180deg,#24358a,#131f5c);box-shadow:inset 0 1px 0 #ffffff30}
+html:not([data-theme=dark]) .line-tabs{border-bottom:1px solid;border-image:var(--metal-line) 1}
+html:not([data-theme=dark]) .line-tabs-ink{background:linear-gradient(90deg,var(--navy),var(--signal))}
+html:not([data-theme=dark]) .theme-toggle{background:linear-gradient(180deg,#fff,#eef1f5)}
+html:not([data-theme=dark]) .theme-knob{background:linear-gradient(180deg,#24358a,#131f5c)}
+
+/* Page heads: a silver rule and a faint coordinate tick row under the title. */
+html:not([data-theme=dark]) .page-head::after{background:var(--metal-line);height:1px}
+.page-head .page-lead{position:relative;padding-left:1rem;border-left:1px solid var(--line-strong)}
+@media (max-width:820px){.page-head .page-lead{padding-left:.8rem}}
+
+/* Surfaces: paper panels get a brushed-metal edge and a soft lift; ordinary list rows stay open. */
+html:not([data-theme=dark]) .lesson-paper,html:not([data-theme=dark]) .library-search,html:not([data-theme=dark]) .category-index,html:not([data-theme=dark]) .responsibility,html:not([data-theme=dark]) .about-stance,html:not([data-theme=dark]) .side-lesson,html:not([data-theme=dark]) .fill-panel,html:not([data-theme=dark]) .prompt-full{border:1px solid;border-image:var(--metal) 1;box-shadow:0 1px 0 #fff inset,0 24px 50px -36px #0a133040}
+html:not([data-theme=dark]) .responsibility{border-top-width:2px;border-image:linear-gradient(90deg,var(--navy),var(--signal) 40%,#c7ced9 70%) 1}
+html:not([data-theme=dark]) .lesson-paper{background-color:#fdfdfe}
+html:not([data-theme=dark]) .objectives{background:linear-gradient(180deg,#f3f6fb,#eef2f8)}
+html:not([data-theme=dark]) .example-prompt,html:not([data-theme=dark]) .flow{background:linear-gradient(180deg,#f6f8fb,#f0f3f7)}
+html:not([data-theme=dark]) .flow li{background:#fff;box-shadow:0 8px 20px -16px #0a133040}
+html:not([data-theme=dark]) .home-block.is-band::before{background:linear-gradient(180deg,#e7ebf1,#eef1f5);border-top:1px solid #fff;border-bottom:1px solid #d6dbe3;box-shadow:0 -1px 0 #d6dbe3}
+
+/* Prompt cards: white face, a hairline that lights along the top edge on hover. */
+html:not([data-theme=dark]) .prompt-card{background:linear-gradient(180deg,#ffffff,#fafbfc)}
+.prompt-card header{position:relative}
+.prompt-card>header::after{content:"";position:absolute;left:-1.2rem;right:-1.2rem;top:-1.15rem;height:2px;background:linear-gradient(90deg,var(--signal),#45d4ff);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.prompt-card:hover>header::after{transform:scaleX(1)}
+html:not([data-theme=dark]) .cat-code{background:linear-gradient(180deg,#24358a,#131f5c)}
+html:not([data-theme=dark]) .prompt-preview{background:#f3f5f8;border-left-color:#aab3c0}
+html:not([data-theme=dark]) .tag{background:#fff}
+html:not([data-theme=dark]) .search-field input{background:#fff;border:1px solid #bcc4d0}
+html:not([data-theme=dark]) .scenario-row button{background:linear-gradient(180deg,#fff,#f0f3f7);border-color:#c6cdd8}
+html:not([data-theme=dark]) .scenario-row button[aria-pressed=true]{background:linear-gradient(180deg,#24358a,#131f5c);border-color:#131f5c}
+
+/* Hero: the light hero gets a soft titanium floor so the compute panel sits on something. */
+html:not([data-theme=dark]) .hero-index{border-top:1px solid;border-image:var(--metal-line) 1}
+html:not([data-theme=dark]) .hero-index dd{background:linear-gradient(180deg,#0a1330,#3a4668);-webkit-background-clip:text;background-clip:text;color:transparent}
+html:not([data-theme=dark]) .hero h1{background:linear-gradient(180deg,#0a1330 30%,#2a3557);-webkit-background-clip:text;background-clip:text;color:transparent}
+html:not([data-theme=dark]) .hero h1 span:not(.nowrap){background:linear-gradient(180deg,#24358a,#1d58dc);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* Video covers and rows */
+html:not([data-theme=dark]) .video-row:hover{background:linear-gradient(90deg,#1d58dc08,transparent 70%)}
+html:not([data-theme=dark]) .series-empty{background:linear-gradient(180deg,#fff,#f4f6f9);border-color:#c6cdd8}
+
+/* Footer keeps its deep ink in both themes; in light mode it gains a titanium top edge. */
+html:not([data-theme=dark]) .site-footer::before{opacity:1;height:2px;background:linear-gradient(90deg,#aab3c0,#ffffff 30%,#8e98a8 60%,#dfe3e9)}
+/* Copy feedback keeps its colours on the light-mode button faces. */
+html:not([data-theme=dark]) .copy-button.is-copied,html:not([data-theme=dark]) .copy-button.is-failed{--btn-fg:#fff}
+html:not([data-theme=dark]) .copy-button.is-failed::before{background:var(--danger);box-shadow:none}
+.lesson-paper .compare p,.lesson-paper .compare-note,.lesson-paper .note p,.lesson-paper .mistakes p,.lesson-paper .lesson-source p{max-width:none}
+
+/* ================= Home page: clean bright white ================= */
+/* No grid on the home page: the measuring grid stays on inner pages only. */
+body:has(.home)::before{display:none}
+html:not([data-theme=dark]) body:has(.home){background:linear-gradient(180deg,#ffffff 0,#fbfcfd 60%,#f6f8fa 100%)}
+html:not([data-theme=dark]) body:has(.home) .site-header{background:color-mix(in srgb,#ffffff 86%,transparent)}
+html:not([data-theme=dark]) .home .home-block.is-band::before{background:linear-gradient(180deg,#f4f6f9,#f8f9fb);border-top-color:#eef1f5;border-bottom-color:#e3e7ed;box-shadow:none}
+/* The second title line runs from a deeper ink to the university logo's navy (#111785) — its lightest point. */
+html:not([data-theme=dark]) .hero h1 span:not(.nowrap){background:linear-gradient(180deg,#070b3d 0%,#0c1263 45%,#111785 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ================= Hero buttons: idle states =================
+ * At rest each CTA has its own quiet motion, different from the hover effect (deeper fill + light lap + sheen):
+ *   開始學習     — a soft light sweeps across every few seconds and the arrow gives a small nudge.
+ *   觀看教學影片 — the brushed-metal border slowly flows, like light moving over titanium.
+ * Hover replaces both with the hover effect; reduced motion turns them off.
+ */
+.hero-actions .btn-primary:not(:hover):not(:focus-visible)::after{animation:idle-sweep 5.2s ease-in-out infinite}
+@keyframes idle-sweep{0%,58%{transform:translateX(-110%)}82%,100%{transform:translateX(110%)}}
+.hero-actions .btn-primary:not(:hover):not(:focus-visible) .arrow{animation:arrow-nudge 2.6s ease-in-out infinite}
+@keyframes arrow-nudge{0%,70%,100%{transform:translateX(0)}82%{transform:translateX(5px)}}
+.hero-actions .btn:not(.btn-primary):not(:hover):not(:focus-visible){background:linear-gradient(105deg,#b9c1cd 0%,#f6f8fb 18%,#aab3c0 34%,#eef1f5 50%,#b9c1cd 66%,#ffffff 82%,#aab3c0 100%);background-size:300% 100%;animation:metal-flow 7s linear infinite}
+html[data-theme=dark] .hero-actions .btn:not(.btn-primary):not(:hover):not(:focus-visible){background:linear-gradient(105deg,#3a414d 0%,#c9d1dc 18%,#4d5562 34%,#7fdcff 50%,#4d5562 66%,#dfe5ee 82%,#3a414d 100%);background-size:300% 100%}
+@keyframes metal-flow{to{background-position:-300% 0}}
+@media (prefers-reduced-motion: reduce){.hero-actions .btn::after,.hero-actions .btn .arrow,.hero-actions .btn{animation:none!important}}
+
+/* Header divider: always present (top of page or scrolled), in both themes. */
+.site-header,.site-header.is-scrolled{border-bottom:1px solid;border-image:var(--metal-line) 1;box-shadow:0 1px 0 var(--line),0 10px 30px -22px #0a133040}
+html[data-theme=dark] .site-header,html[data-theme=dark] .site-header.is-scrolled{box-shadow:0 1px 0 #ffffff0d,0 10px 30px -18px #000}

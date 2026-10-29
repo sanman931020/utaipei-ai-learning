@@ -50,7 +50,7 @@ function TrackSwitch({ current, lesson }: { current: TrackId; lesson?: Lesson })
       </div>
     </div>
     <nav className="track-entries" aria-label="共通課程與 AI Agent 專區">
-      {tracks.filter(track => !track.id.startsWith('chatgpt-') && !track.id.startsWith('gemini-')).map(track => <a key={track.id} href={target(track.id)} aria-current={current === track.id ? 'true' : undefined}>
+      {tracks.filter(track => !track.id.startsWith('chatgpt-') && !track.id.startsWith('gemini-')).map(track => <a key={track.id} href={target(track.id)} data-track={track.id} aria-current={current === track.id ? 'true' : undefined}>
         <small className="mono">{track.en}</small><span>{track.label}</span>
       </a>)}
     </nav>
@@ -92,6 +92,11 @@ function TrackOverview({ track }: { track: TrackId }) {
       })}
     </ol>
   </>
+}
+
+/** Rough reading time: about 400 Chinese characters a minute across all of the lesson's text. */
+function readingMinutes(lesson: Lesson) {
+  return Math.max(3, Math.round((JSON.stringify([lesson.summary, lesson.concepts, lesson.steps, lesson.examples, lesson.mistakes, lesson.extension, lesson.practice]).match(/[㐀-鿿]/g)?.length ?? 0) / 400))
 }
 
 type TocItem = { id: string; label: string; children?: { id: string; label: string }[] }
@@ -184,7 +189,7 @@ function LessonView({ lesson }: { lesson: Lesson }) {
         <p className="lesson-crumbs"><a href={href('learn', { track: lesson.track })}>{track.label}</a><span aria-hidden="true">／</span>單元 {lesson.code}</p>
         <div className="lesson-cover-title"><span className="lesson-code is-large">{lesson.code}</span><div><h1 id="lesson-title" tabIndex={-1}>{lesson.title}</h1>{lesson.subtitle && <p className="lesson-subtitle">{lesson.subtitle}</p>}</div></div>
         <p className="lesson-summary">{lesson.summary}</p>
-        <ul className="lesson-tags"><li>難度：{lesson.level}</li>{lesson.audience && <li>對象：{lesson.audience}</li>}<li>{lessonVideos.length ? `對應影片：${lessonVideos.map(video => video.code).join('、')}` : '影片：尚待製作'}</li><li>相關 Prompt：{lessonPrompts.length} 則</li></ul>
+        <ul className="lesson-tags"><li className="mono">UNIT {String(index + 1).padStart(2, '0')} / {String(siblings.length).padStart(2, '0')}</li><li>約 {readingMinutes(lesson)} 分鐘閱讀</li><li>難度：{lesson.level}</li>{lesson.audience && <li>對象：{lesson.audience}</li>}<li>{lessonVideos.length ? `對應影片：${lessonVideos.map(video => video.code).join('、')}` : '影片：尚待製作'}</li><li>相關 Prompt：{lessonPrompts.length} 則</li></ul>
         <section className="objectives" aria-labelledby="objectives-title"><h2 id="objectives-title" tabIndex={-1}>學習目標</h2><ol>{lesson.learningObjectives.map(item => <li key={item}>{item}</li>)}</ol></section>
       </header>
 
@@ -251,7 +256,8 @@ export function LearnPage({ route }: { route: Route }) {
   useScrollRestore(route, true, { keepOnQueryChange: true })
   useEffect(() => { if (lessonId && !lesson) navigate('learn', undefined, { replace: true }) }, [lessonId, lesson])
 
-  return <div className="page learn-page">
+  // data-track drives the track accent colour (tool courses, shared course and the two AI Agent tracks differ).
+  return <div className="page learn-page" data-track={track}>
     <header className="page-head">
       <span className="kicker"><b>01</b> Knowledge base</span>
       <h1>學習知識</h1>

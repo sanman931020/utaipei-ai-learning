@@ -14,7 +14,7 @@ const sections: { id: SectionId; label: string; en: string; path: string }[] = [
   { id: 'about', label: '關於', en: 'ABOUT', path: 'about' },
 ]
 
-export function SiteHeader({ current }: { current?: SectionId }) {
+export function SiteHeader({ current, onSearch }: { current?: SectionId; onSearch: () => void }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const nav = useIndicator<HTMLElement>('a[aria-current=page]', '.nav-ink', [current])
@@ -41,6 +41,7 @@ export function SiteHeader({ current }: { current?: SectionId }) {
       <i className="nav-ink" aria-hidden="true" />
     </nav>
     <div className="site-header-tools">
+      <button type="button" className="header-search" onClick={onSearch} aria-label="全站快速搜尋（Ctrl+K）" aria-keyshortcuts="Control+K Meta+K"><span className="search-icon" aria-hidden="true" /><span className="header-search-label">搜尋</span><kbd className="mono">Ctrl K</kbd></button>
       <ThemeToggle />
       <button type="button" className="menu-button" aria-expanded={open} aria-controls="site-nav" aria-label={open ? '關閉選單' : '開啟選單'} onClick={() => setOpen(value => !value)}><i aria-hidden="true" /></button>
     </div>
